@@ -1,0 +1,10 @@
+replicaCount: 2
+
+image:
+  repository: my-dockerhub-username/my-ip-reverser
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8080
