@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  repository: my-dockerhub-username/my-ip-reverser
+  repository: hemanthdp07/reverse-ip-app
   tag: latest
   pullPolicy: IfNotPresent
 
