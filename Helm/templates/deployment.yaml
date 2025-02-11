@@ -6,14 +6,14 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: ip-reverser
+      app: reverse-ip-app
   template:
     metadata:
       labels:
-        app: ip-reverser
+        app: reverse-ip-app
     spec:
       containers:
-        - name: ip-reverser
+        - name: reverse-ip-app
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: 8080
