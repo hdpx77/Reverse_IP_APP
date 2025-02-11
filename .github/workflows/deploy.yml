@@ -21,9 +21,22 @@ jobs:
           docker build -t hemanthdp07/reverse-ip-app:latest .
           docker push hemanthdp07/reverse-ip-app:latest
 
-      - name: Setup Minikube
-        uses: medyagh/setup-minikube@latest
+      - name: Configure Kubeconfig for K3s
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+          export KUBECONFIG=$HOME/.kube/config
+
+      - name: Verify Kubernetes Connection
+        run: kubectl get nodes
 
       - name: Deploy Helm Chart
         run: |
-          helm upgrade --install reverse-ip-app ./reverse-ip-app
+          helm upgrade --install reverse-ip-app ./reverse-ip-app --namespace default --wait
+
+      - name: Restart Deployment (Ensure Update)
+        run: kubectl rollout restart deployment reverse-ip-app
+
+      - name: Get Service Details
+        run: kubectl get svc -n default
